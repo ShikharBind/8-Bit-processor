@@ -34,7 +34,7 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
 
       4'b0001:  begin // ST 
                 rd <= 2'b00;
-                rs <= 2'b00;
+                rs <= 2'bxx;
                 isim4 <= 1'b1;
                 mem_read <= 1'b0;
                 mem_write <= 1'b1;
@@ -42,27 +42,28 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 end
 
      4'b0011:   begin // MR  
-                rd <= 2'b00;
-                rs <= 2'b00;
-                mem_read <= 1'b1;
+                rd <= inst[3:2];
+                rs <= inst[1:0];
+                mem_read <= 1'b0;
                 mem_write <= 1'b0;
-                reg_write <= 1'b0;
+                reg_write <= 1'b1;
                 end
 
      4'b0010:   begin // MI  
-                rd <= 2'b00;
-                rs <= 2'b00;
-                mem_read <= 1'b1;
-                mem_write <= 1'b1;
-                reg_write <= 1'b0;
+                rd <= inst[3:2];
+                rs <= 2'bxx;
+                isim4 <= 1'b0;
+                mem_read <= 1'b0;
+                mem_write <= 1'b0;
+                reg_write <= 1'b1;
                 end
 
      4'b0100:   begin // SUM  
                 rd <= inst[3:2];
                 rs <= inst[1:0];
-                mem_read <= 1'b1;
-                mem_write <= 1'b1;
-                reg_write <= 1'b0;
+                mem_read <= 1'b0;
+                mem_write <= 1'b0;
+                reg_write <= 1'b1;
                 end
 
      4'b1100:   begin // SMI  
@@ -71,87 +72,92 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 isim4 <= 1'b0;
                 mem_read <= 1'b0;
                 mem_write <= 1'b0;
-                reg_write <= 1'b0;
+                reg_write <= 1'b1;
                 end
 
     4'b0101:    begin // SB  
-                rd <= 2'b00;
-                rs <= 2'b00;
-                mem_read <= 1'b1;
-                mem_write <= 1'b1;
-                reg_write <= 1'b0;
+                rd <= inst[3:2];
+                rs <= inst[1:0];
+                mem_read <= 1'b0;
+                mem_write <= 1'b0;
+                reg_write <= 1'b1;
                 end
 
      4'b1101:   begin // SBI  
-                rd <= 2'b00;
-                rs <= 2'b00;
-                mem_read <= 1'b1;
+                rd <= inst[3:2];
+                rs <= 2'bxx;
+                isim4 <= 1'b0;
+                mem_read <= 1'b0;
                 mem_write <= 1'b0;
-                reg_write <= 1'b0;
+                reg_write <= 1'b1;
                 end
 
      4'b0111:   begin // CM  
-                rd <= 2'b00;
-                rs <= 2'b00;
-                mem_read <= 1'b1;
+                rd <= inst[3:2];
+                rs <= inst[1:0];
+                mem_read <= 1'b0;
                 mem_write <= 1'b0;
-                reg_write <= 1'b0;
+                reg_write <= 1'b1;
                 end
 
      4'b1111:   begin // CMI  
-                rd <= 2'b00;
-                rs <= 2'b00;
-                mem_read <= 1'b1;
+                rd <= inst[3:2];
+                rs <= 2'bxx;
+                isim4 <= 1'b0;
+                mem_read <= 1'b0;
                 mem_write <= 1'b0;
-                reg_write <= 1'b0;
+                reg_write <= 1'b1;
                 end
 
      4'b0110:   begin // ANR  
-                rd <= 2'b00;
-                rs <= 2'b00;
-                mem_read <= 1'b1;
+                rd <= inst[3:2];
+                rs <= inst[1:0];
+                mem_read <= 1'b0;
                 mem_write <= 1'b0;
-                reg_write <= 1'b0;
+                reg_write <= 1'b1;
                 end
 
      4'b1110:   begin // ANI  
-                rd <= 2'b00;
-                rs <= 2'b00;
-                mem_read <= 1'b1;
+                rd <= inst[3:2];
+                rs <= 2'bxx;
+                isim4 <= 1'b0;
+                mem_read <= 1'b0;
                 mem_write <= 1'b0;
-                reg_write <= 1'b0;
+                reg_write <= 1'b1;
                 end  
 
      4'b1000:   begin // ORR  
-                rd <= 2'b00;
-                rs <= 2'b00;
-                mem_read <= 1'b1;
+                rd <= inst[3:2];
+                rs <= inst[1:0];
+                mem_read <= 1'b0;
                 mem_write <= 1'b0;
-                reg_write <= 1'b0;
+                reg_write <= 1'b1;
                 end  
 
      4'b1001:   begin // ORI  
-                rd <= 2'b00;
-                rs <= 2'b00;
-                mem_read <= 1'b1;
+                rd <= inst[3:2];
+                rs <= 2'bxx;
+                isim4 <= 1'b0;
+                mem_read <= 1'b0;
                 mem_write <= 1'b0;
-                reg_write <= 1'b0;
+                reg_write <= 1'b1;
                 end  
 
      4'b1010:   begin // XRR  
-                rd <= 2'b00;
-                rs <= 2'b00;
-                mem_read <= 1'b1;
+                rd <= inst[3:2];
+                rs <= inst[1:0];
+                mem_read <= 1'b0;
                 mem_write <= 1'b0;
-                reg_write <= 1'b0;
+                reg_write <= 1'b1;
                 end 
 
      4'b1011:   begin // XRI  
-                rd <= 2'b00;
-                rs <= 2'b00;
-                mem_read <= 1'b1;
+                rd <= inst[3:2];
+                rs <= 2'bxx;
+                isim4 <= 1'b0;
+                mem_read <= 1'b0;
                 mem_write <= 1'b0;
-                reg_write <= 1'b0;
+                reg_write <= 1'b1;
                 end  
 
      default:   begin //DEFAULT  
@@ -159,7 +165,7 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= 2'b00;
                 mem_read <= 1'b0;
                 mem_write <= 1'b0;
-                reg_write <= 1'b1;
+                reg_write <= 1'b0;
                 end                        
       endcase
       end
