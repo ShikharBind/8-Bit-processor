@@ -3,4 +3,5 @@ dns
 p
 processor
 *.out
+*.exe
 tb_processor.v
