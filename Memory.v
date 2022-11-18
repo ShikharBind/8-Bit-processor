@@ -8,7 +8,7 @@ module Instruction_Memory
      reg [7:0] ram [255:0]; 
      initial begin  
           for(i=0;i<256;i=i+1)  
-               ram[i] <= 8'd0;  
+               ram[i] <= 8'dx;  
      end  
      always @(posedge clk) begin  
           if (mem_write) 

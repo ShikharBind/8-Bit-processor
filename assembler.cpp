@@ -77,9 +77,10 @@ int main()
         cout << "reg clk,reset, ins_write, ins_read;\n";
         cout << "reg[7:0] machine_code;\n";
         cout << "wire[7:0] alu_result, flag, instruction_out, pc;\n";
+        cout << "wire[31:0] register;\n";
         cout << "\n";
         cout << "  CPU C(.clk(clk), .reset(reset), .alu_result(alu_result), .flag(flag), .instruction_write_data(machine_code),\n";
-        cout << "         .instruction(instruction_out), .pc(pc), .ins_write(ins_write), .ins_read(ins_read));\n";
+        cout << "         .instruction(instruction_out), .pc(pc), .ins_write(ins_write), .ins_read(ins_read), .register(register));\n";
         cout << "initial     \n";
         cout << " begin\n";
         cout << "  $dumpfile(\"dump.vcd\");    \n";
@@ -270,9 +271,11 @@ int main()
     cout << "\n";
     cout << "initial \n";
     cout << " begin   \n";
-    cout << "   $monitor($time,\" %b %b %b\", pc, instruction_out, alu_result);\n";
+    cout << "   $monitor($time,\" %b %b %b  A=%b, B=%b, C=%b, D=%b\", pc, instruction_out, alu_result,\n";
+    cout << "   register[7:0], register[15:8], register[23:16], register[31:24]\n";
+    cout << "   );\n";
     cout << " end\n";
     cout << "  \n";
-    cout << "initial #15 $finish;\n";
+    cout << "initial #50 $finish;\n";
     cout << "endmodule\n";
 }

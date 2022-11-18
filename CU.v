@@ -1,18 +1,21 @@
+`include "Decoder.v"
+
 module Control_Unit(
     input[7:0] inst, //instruction
     input reset, clk,
-    output reg[3:0] opcode,
-    output reg[1:0] rd, rs,
-    output reg mem_read, mem_write, imm, alu_src, reg_write,
+    output[3:0] opcode,
+    output reg[1:0] rd, rs, prevrd,
+    output reg mem_read, mem_write, reg_write,
     output[7:0] immediate_value
 );
 reg isim4;
-Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
+Decoder decoder(.isim4(isim4), .inst(inst), .imm8(immediate_value), .opcode(opcode));
 
  always @(inst,posedge clk,reset)  
- begin  
+ begin 
+    prevrd <= rd; 
       if(reset == 1'b1) begin  
-                opcode <= 4'd0;
+                // opcode <= 4'd0;
                 rd <= 2'b00;
                 rs <= 2'b00;
                 mem_read <= 1'b0;
@@ -20,9 +23,7 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 reg_write <= 1'b0;
       end  
       else begin  
-      opcode = inst[7:4];
-      $display(opcode);
-      case(opcode)   
+      case(inst[7:4])   
        4'b0000: begin // LD  
                 rd <= 2'b00;
                 rs <= 2'bxx;
@@ -51,7 +52,7 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
 
      4'b0010:   begin // MI  
                 rd <= inst[3:2];
-                rs <= 2'bxx;
+                rs <= 2'b00;
                 isim4 <= 1'b0;
                 mem_read <= 1'b0;
                 mem_write <= 1'b0;
@@ -68,7 +69,7 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
 
      4'b1100:   begin // SMI  
                 rd <= inst[3:2];
-                rs <= 2'bxx;
+                rs <= 2'b00;
                 isim4 <= 1'b0;
                 mem_read <= 1'b0;
                 mem_write <= 1'b0;
@@ -169,25 +170,8 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 end                        
       endcase
       end
+    //   $display(rd);
 end
 endmodule
 
-module Immto8(input isim4, input[3:0] inst, output reg[7:0] imm8);
-integer i;
-always @(inst)
-begin
-    if(isim4) begin
-        imm8[3:0] <= inst[3:0];
-        for(i=4;i<8;i=i+1) begin
-            imm8[i] <= inst[3];
-        end
-    end 
-    else begin
-        imm8[1:0] <= inst[1:0];
-        for(i=2;i<8;i=i+1) begin
-            imm8[i] <= inst[1];
-        end
-    end
-    // #0.5 $display("%b",imm8);
-end
-endmodule
+

@@ -27,8 +27,12 @@ forever
 initial 
 begin 
     #1
-    #2 machine_code = 8'b11001001;
-    #2 machine_code = 8'd10;
+    #2 machine_code = 8'b11000001;
+    // #2 machine_code = 8'b00110001;
+    // #2 machine_code = 8'b00010000;
+    // #2 machine_code = 8'b00100000;
+    // #2 machine_code = 8'b00000000;
+    // #2 machine_code = 8'b01000001;
     // #2 machine_code = 8'd3;
     // #2 machine_code = 8'd4;
     #2 ins_write = 0; ins_read = 1; reset = 1;
@@ -40,6 +44,6 @@ initial
    $monitor($time," %b %b %b", pc, instruction_out, alu_result);
  end
   
-initial #15 $finish;
+initial #50 $finish;
 endmodule
  
