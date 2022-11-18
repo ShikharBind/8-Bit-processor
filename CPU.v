@@ -4,19 +4,24 @@
 
 
 module CPU(
-    input clk, reset,
+    input clk, reset, ins_read,
+    input ins_write,
     input[7:0] instruction_write_data,
-    output[7:0] alu_result, instruction
+    output[7:0] alu_result, flag, instruction, 
+    output reg[7:0] pc
 );
 
 
 // registers
-reg[7:0] pc;
+// reg[7:0] pc;
 reg[7:0] register[3:0];
-reg[7:0] immediate_value;
+wire[7:0] immediate_value;
 
 //memory interface
-reg mem_read, mem_write, ins_read, ins_write;
+wire mem_read, mem_write, ins_read;
+// reg ins_write;
+// assign ins_write = ins_write_in;
+assign ins_read = ~ins_write;
 wire[3:0] mem_access_addr;
 wire[7:0] mem_write_data, mem_read_data;
 
@@ -38,18 +43,23 @@ begin
 end 
 
 // controlling program counter
-always @(posedge clk or posedge reset)  
- begin   
-      if(reset)   
-           pc <= 8'd0;  
-      else  
-           pc <= pc + 1;  
- end  
-
- always @(instruction_write_data)
+always @(posedge clk or posedge reset or instruction_write_data)  
  begin
-    ins_write <= 1'b1;
- end
+    if(ins_write==1'b0)  begin 
+      if(reset)  
+      begin 
+           pc <= 8'd0; 
+      end
+      else begin
+        if(pc < 255) pc <= pc + 1;
+        else pc <= pc;  
+      end
+    end
+    else  begin
+    pc <= pc + 1;
+    end
+ end 
+
 
 Instruction_Memory instruction_memory(.clk(clk),.mem_read(ins_read),.mem_write(ins_write),
                 .access_addr(pc),.write_data(instruction_write_data),
@@ -60,6 +70,9 @@ Instruction_Memory instruction_memory(.clk(clk),.mem_read(ins_read),.mem_write(i
                 .read_data(mem_read_data));
  
  Control_Unit control_unit(.inst(instruction), .reset(reset), .opcode(opcode), .rd(rd), .rs(rs),
-            .mem_read(mem_read), .mem_write(mem_write), .imm(immediate), .alu_src(alu_src), .reg_write(reg_write));
+            .mem_read(mem_read), .mem_write(mem_write), .imm(immediate), .alu_src(alu_src), .reg_write(reg_write), .immediate_value(immediate_value));
+
+ALU alu(.clk(clk), .a(register[rd]), .b(register[rs]), .immv(immediate_value),
+        .alu_control(opcode), .alu_result(alu_result), .flag(flag));
 
 endmodule
