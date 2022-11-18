@@ -1,3 +1,5 @@
 dns
 *.vcd
+p
 processor
+*.out

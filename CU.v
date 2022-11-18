@@ -2,7 +2,7 @@ module Control_Unit(
     input[7:0] inst, //instruction
     input reset,
     output reg[3:0] opcode,
-    output reg[1:0] rd, rs
+    output reg[1:0] rd, rs,
     output reg mem_read, mem_write, imm, alu_src, reg_write
 );
 

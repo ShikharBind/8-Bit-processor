@@ -1,14 +1,35 @@
-module Memory  
+module Instruction_Memory  
 (
-     input integer capacity, 
-     input  clk, mem_read, mem_write
+     input  clk, mem_read, mem_write,
      input[7:0]  access_addr, write_data,  
-     output[7:0] read_data  
+     output [7:0] read_data  
 );  
-     integer i;  
-     reg [7:0] ram [capacity-1:0]; 
+     integer i; 
+     reg [7:0] ram [255:0]; 
      initial begin  
-          for(i=0;i<capacity;i=i+1)  
+          // capacity
+          for(i=0;i<256;i=i+1)  
+               ram[i] <= 8'd0;  
+     end  
+     always @(posedge clk) begin  
+          if (mem_write)  
+               ram[access_addr] <= write_data;  
+     end  
+     assign read_data = (mem_read==1'b1) ? ram[access_addr]: 8'd0;   
+endmodule 
+
+module Data_Memory  
+(
+     input  clk, mem_read, mem_write,
+     input[3:0]  access_addr, 
+     input[7:0]  write_data,  
+     output [7:0] read_data  
+);  
+     integer i; 
+     reg [7:0] ram [255:0]; 
+     initial begin  
+          // capacity
+          for(i=0;i<256;i=i+1)  
                ram[i] <= 8'd0;  
      end  
      always @(posedge clk) begin  
