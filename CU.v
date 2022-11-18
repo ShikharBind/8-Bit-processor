@@ -1,6 +1,6 @@
 module Control_Unit(
     input[7:0] inst, //instruction
-    input reset,
+    input reset, clk,
     output reg[3:0] opcode,
     output reg[1:0] rd, rs,
     output reg mem_read, mem_write, imm, alu_src, reg_write,
@@ -9,7 +9,7 @@ module Control_Unit(
 reg isim4;
 Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
 
- always @(*)  
+ always @(inst,posedge clk,reset)  
  begin  
       if(reset == 1'b1) begin  
                 opcode <= 4'd0;
@@ -17,12 +17,11 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= 2'b00;
                 mem_read <= 1'b0;
                 mem_write <= 1'b0;
-                // alu_src <= 1'b0;
-                imm <= 1'b0;
                 reg_write <= 1'b0;
       end  
       else begin  
       opcode = inst[7:4];
+      $display(opcode);
       case(opcode)   
        4'b0000: begin // LD  
                 rd <= 2'b00;
@@ -30,8 +29,6 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 isim4 <= 1'b1;
                 mem_read <= 1'b1;
                 mem_write <= 1'b0;
-                // alu_src <= 1'b1;
-                imm <= 1'b0;
                 reg_write <= 1'b1;
                 end
 
@@ -41,9 +38,7 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 isim4 <= 1'b1;
                 mem_read <= 1'b0;
                 mem_write <= 1'b1;
-                // alu_src <= 1'b1;
-                imm <= 1'b0;
-                reg_write <= 1'b0;;
+                reg_write <= 1'b0;
                 end
 
      4'b0011:   begin // MR  
@@ -51,8 +46,6 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= 2'b00;
                 mem_read <= 1'b1;
                 mem_write <= 1'b0;
-                // alu_src <= 1'b0;
-                imm <= 1'b0;
                 reg_write <= 1'b0;
                 end
 
@@ -61,8 +54,6 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= 2'b00;
                 mem_read <= 1'b1;
                 mem_write <= 1'b1;
-                // alu_src <= 1'b0;
-                imm <= 1'b0;
                 reg_write <= 1'b0;
                 end
 
@@ -71,8 +62,6 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= inst[1:0];
                 mem_read <= 1'b1;
                 mem_write <= 1'b1;
-                // alu_src <= 1'b0;
-                imm <= 1'b0;
                 reg_write <= 1'b0;
                 end
 
@@ -82,10 +71,7 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 isim4 <= 1'b0;
                 mem_read <= 1'b0;
                 mem_write <= 1'b0;
-                // alu_src <= 1'b0;
-                imm <= 1'b1;
                 reg_write <= 1'b0;
-                // immediate_value <= imm8;
                 end
 
     4'b0101:    begin // SB  
@@ -93,8 +79,6 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= 2'b00;
                 mem_read <= 1'b1;
                 mem_write <= 1'b1;
-                // alu_src <= 1'b0;
-                imm <= 1'b0;
                 reg_write <= 1'b0;
                 end
 
@@ -103,8 +87,6 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= 2'b00;
                 mem_read <= 1'b1;
                 mem_write <= 1'b0;
-                // alu_src <= 1'b0;
-                imm <= 1'b0;
                 reg_write <= 1'b0;
                 end
 
@@ -113,8 +95,6 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= 2'b00;
                 mem_read <= 1'b1;
                 mem_write <= 1'b0;
-                // alu_src <= 1'b0;
-                imm <= 1'b0;
                 reg_write <= 1'b0;
                 end
 
@@ -123,8 +103,6 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= 2'b00;
                 mem_read <= 1'b1;
                 mem_write <= 1'b0;
-                // alu_src <= 1'b0;
-                imm <= 1'b0;
                 reg_write <= 1'b0;
                 end
 
@@ -133,8 +111,6 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= 2'b00;
                 mem_read <= 1'b1;
                 mem_write <= 1'b0;
-                // alu_src <= 1'b0;
-                imm <= 1'b0;
                 reg_write <= 1'b0;
                 end
 
@@ -143,8 +119,6 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= 2'b00;
                 mem_read <= 1'b1;
                 mem_write <= 1'b0;
-                // alu_src <= 1'b0;
-                imm <= 1'b0;
                 reg_write <= 1'b0;
                 end  
 
@@ -153,8 +127,6 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= 2'b00;
                 mem_read <= 1'b1;
                 mem_write <= 1'b0;
-                // alu_src <= 1'b0;
-                imm <= 1'b0;
                 reg_write <= 1'b0;
                 end  
 
@@ -163,8 +135,6 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= 2'b00;
                 mem_read <= 1'b1;
                 mem_write <= 1'b0;
-                // alu_src <= 1'b0;
-                imm <= 1'b0;
                 reg_write <= 1'b0;
                 end  
 
@@ -173,8 +143,6 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= 2'b00;
                 mem_read <= 1'b1;
                 mem_write <= 1'b0;
-                // alu_src <= 1'b0;
-                imm <= 1'b0;
                 reg_write <= 1'b0;
                 end 
 
@@ -183,8 +151,6 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= 2'b00;
                 mem_read <= 1'b1;
                 mem_write <= 1'b0;
-                // alu_src <= 1'b0;
-                imm <= 1'b0;
                 reg_write <= 1'b0;
                 end  
 
@@ -193,8 +159,6 @@ Immto8 imm28(.isim4(isim4), .inst(inst[3:0]), .imm8(immediate_value));
                 rs <= 2'b00;
                 mem_read <= 1'b0;
                 mem_write <= 1'b0;
-                // alu_src <= 1'b0;
-                imm <= 1'b0;
                 reg_write <= 1'b1;
                 end                        
       endcase

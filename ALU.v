@@ -27,7 +27,7 @@ begin
  4'b1011: alu_result = a ^ b; // XRI
  default: alu_result = 8'bxxxxxxxx; // DEFAULT
  endcase
-//  $display("%b", alu_result);
+//  $display("%b", alu_control);
 end
  
 endmodule

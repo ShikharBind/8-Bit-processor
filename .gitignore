@@ -3,3 +3,4 @@ dns
 p
 processor
 *.out
+tb_processor.v

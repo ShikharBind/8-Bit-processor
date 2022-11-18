@@ -16,7 +16,7 @@ module Instruction_Memory
                ram[access_addr] <= write_data;
           end
      end  
-     assign read_data = (mem_read==1'b1) ? ram[access_addr]: 8'd0;   
+     assign read_data = (mem_read==1'b1) ? ram[access_addr]: 8'dx;   
 endmodule 
 
 module Data_Memory  

@@ -1,2 +1,2 @@
 SMI A 3
-ST 7
+ST 9
