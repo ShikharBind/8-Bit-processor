@@ -1,7 +1,9 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+
 using namespace std;
-typedef long long ll;
-ifstream read;
+// typedef long long ll;
+// ifstream read;
 void hexatobcd(string s)
 {
     if (s == "0")
@@ -106,7 +108,7 @@ int main()
         // string s;
         // getline(cin, s);
         // cout << s << endl;
-
+        cout << "\t";
         string opcode;
         for (int i = 0; i < s.size(); i++)
         {

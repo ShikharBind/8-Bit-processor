@@ -1,2 +1,4 @@
-SMI A 3
-ST 9
+MI A 1
+MR B A
+SUM A B
+ST F
