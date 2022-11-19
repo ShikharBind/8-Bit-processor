@@ -95,7 +95,7 @@ always @(rd or instruction) begin
     end
     endcase
  end
- always @(rs or instruction) begin
+always @(rs or instruction) begin
     case(rs)
     2'b00:begin
       alu_b <= register[7:0];
@@ -114,33 +114,29 @@ always @(rd or instruction) begin
     end
     endcase
  end
- always @(negedge clk) begin
-    if(reg_write)
-    begin
+
+always @(negedge clk) begin
+    if(reg_write) begin
       if(mem_read) register[7:0] <= mem_read_data;
-      else begin end
-    end
- end
+      else
+        begin case(rd)
+        2'b00:begin
+          register[7:0] <= alu_result;
+        end
 
- always @(negedge clk) begin
-    // if(reg_write)
-    begin case(rd)
-    2'b00:begin
-      register[7:0] <= alu_result;
-    end
-
-    2'b01:begin
-      register[15:8] <= alu_result;
-    end
-    
-    2'b10:begin
-      register[23:16] <= alu_result;
-    end
-    
-    2'b11:begin
-      register[31:24] <= alu_result;
-    end
-    endcase
+        2'b01:begin
+          register[15:8] <= alu_result;
+        end
+        
+        2'b10:begin
+          register[23:16] <= alu_result;
+        end
+        
+        2'b11:begin
+          register[31:24] <= alu_result;
+        end
+        endcase
+        end
     end
  end
 

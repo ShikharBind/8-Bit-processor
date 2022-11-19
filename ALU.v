@@ -27,7 +27,7 @@ begin
  4'b1011: alu_result = a ^ immv; // XRI
  default: alu_result <= alu_result; // DEFAULT
  endcase
- $display("%b %b %b", a, b, immv);
+//  $display("%b %b %b", a, b, immv);
 //  $display("%b", alu_control);
 end
  
