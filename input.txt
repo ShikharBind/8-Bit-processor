@@ -2,6 +2,6 @@ SMI A 1
 MR B A
 MI A 0
 LD 7
-SUM A B
+CM A C
 #4 01
 #7 05

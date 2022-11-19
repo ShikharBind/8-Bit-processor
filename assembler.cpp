@@ -74,15 +74,17 @@ int main()
     
         cout << "`timescale 1ns/1ps\n";       
         cout << "module tb_cpu;\n"  ;
-        cout << "reg clk,reset, ins_write, ins_read;\n";
+        cout << "reg clk,reset, ins_write, ins_read, mem_read_tb;\n";
         cout << "reg[7:0] machine_code, mem_write_data_tb;\n";
         cout << "reg[3:0] access_addr_tb;\n";
-        cout << "wire[7:0] alu_result, flag, instruction_out, pc;\n";
+        cout << "wire[7:0] alu_result, flag, instruction_out, pc, mem_read_data;\n";
         cout << "wire[31:0] register;\n";
+        cout << "integer i;\n";
         cout << "\n";
         cout << "  CPU C(.clk(clk), .reset(reset), .alu_result(alu_result), .flag(flag), .instruction_write_data(machine_code),\n";
         cout << "         .instruction(instruction_out), .pc(pc), .ins_write(ins_write), .ins_read(ins_read), .register(register),\n";
-        cout << "         .mem_write_data_tb(mem_write_data_tb), .access_addr_tb(access_addr_tb));\n";
+        cout << "         .mem_write_data_tb(mem_write_data_tb), .access_addr_tb(access_addr_tb),\n";
+        cout << "         .mem_read_data(mem_read_data), .mem_read_tb(mem_read_tb));\n";
         cout << "initial     \n";
         cout << " begin\n";
         cout << "  $dumpfile(\"dump.vcd\");    \n";
@@ -278,11 +280,18 @@ int main()
     cout << "\n";
     cout << "initial \n";
     cout << " begin   \n";
-    cout << "   $monitor($time,\" %b %b %b  A=%b, B=%b, C=%b, D=%b\", pc, instruction_out, alu_result,\n";
-    cout << "   register[7:0], register[15:8], register[23:16], register[31:24]\n";
+    cout << "   $monitor($time,\" %b %b %b  A=%b, B=%b, C=%b, D=%b, Flag=%d\", pc, instruction_out, alu_result,\n";
+    cout << "   register[7:0], register[15:8], register[23:16], register[31:24], flag\n";
     cout << "   );\n";
     cout << " end\n";
     cout << "  \n";
-    cout << "initial #50 $finish;\n";
+    cout << " initial begin #51 reset = 1; mem_read_tb = 1; access_addr_tb = 4'H0;\n";
+    cout << " for(i=0; i<18; i=i+1) begin\n";
+    cout << "  $display(\"\t%d \t%H\",access_addr_tb, mem_read_data);\n";
+    cout << "  #2 access_addr_tb <= access_addr_tb + 1; \n";
+    cout << "  end\n";
+    cout << " end\n";
+
+    cout << " initial #90 $finish;\n";
     cout << "endmodule\n";
 }

@@ -1,5 +1,5 @@
 module DTU(
-    input clk, mem_write_tb,
+    input clk, mem_write_tb, mem_read_tb,
     input[7:0] data, mem_write_data_tb,
     input[7:0] access_addr_im, 
     input[3:0] access_addr_tb,
@@ -9,7 +9,7 @@ module DTU(
 
 always @(posedge clk) 
 begin
-    if(mem_write_tb) begin
+    if(mem_write_tb || mem_read_tb) begin
         mem_access_addr <= access_addr_tb;
         write_data <= mem_write_data_tb;
     end
