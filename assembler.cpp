@@ -75,12 +75,14 @@ int main()
         cout << "`timescale 1ns/1ps\n";       
         cout << "module tb_cpu;\n"  ;
         cout << "reg clk,reset, ins_write, ins_read;\n";
-        cout << "reg[7:0] machine_code;\n";
+        cout << "reg[7:0] machine_code, mem_write_data_tb;\n";
+        cout << "reg[3:0] access_addr_tb;\n";
         cout << "wire[7:0] alu_result, flag, instruction_out, pc;\n";
         cout << "wire[31:0] register;\n";
         cout << "\n";
         cout << "  CPU C(.clk(clk), .reset(reset), .alu_result(alu_result), .flag(flag), .instruction_write_data(machine_code),\n";
-        cout << "         .instruction(instruction_out), .pc(pc), .ins_write(ins_write), .ins_read(ins_read), .register(register));\n";
+        cout << "         .instruction(instruction_out), .pc(pc), .ins_write(ins_write), .ins_read(ins_read), .register(register),\n";
+        cout << "         .mem_write_data_tb(mem_write_data_tb), .access_addr_tb(access_addr_tb));\n";
         cout << "initial     \n";
         cout << " begin\n";
         cout << "  $dumpfile(\"dump.vcd\");    \n";
@@ -89,7 +91,7 @@ int main()
         cout << "\n";
         cout << "initial   \n";
         cout << " begin\n";
-        cout << "  clk = 0; ins_write=1;\n";
+        cout << "  clk = 0; ins_write=1; access_addr_tb = 4'H0; mem_write_data_tb = 8'H00;\n";
         cout << "forever\n";
         cout << "    begin\n";
         cout << "     #1 clk = 0;\n";
@@ -264,7 +266,7 @@ int main()
         cout << ";" << endl;
 
     }
-
+    cout << "    #2\n";
     cout << "    #2 ins_write = 0; ins_read = 1; reset = 1;\n";
     cout << "    #0.1 reset = 0; \n";
     cout << "end\n";
