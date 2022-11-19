@@ -6,14 +6,11 @@ module DTU(
     output reg[3:0] mem_access_addr
 );
 
-always @(posedge mem_read or posedge mem_write) 
+always @(posedge clk) 
 begin
     mem_access_addr <= access_addr_im[3:0];
-    // if(mem_write)
     write_data <= data;
-    // else if(mem_read)
-    // read_data <= 
-
+    // $display("%b",access_addr_im);
 end
 
 endmodule

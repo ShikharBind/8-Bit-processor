@@ -6,7 +6,7 @@ module ALU(
   output reg [7:0] alu_result, flag  //alu_result
 );
 
-always @(a, b, immv)
+always @(posedge clk)
 begin 
  case(alu_control)
 //  4'b0000: alu_result = 0; // LD

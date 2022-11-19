@@ -1,10 +1,11 @@
 module Decoder(
-    input isim4, input[7:0] inst, 
+    input isim4, clk,
+     input[7:0] inst, 
     output reg[7:0] imm8,
     output reg[3:0] opcode
 );
 integer i;
-always @(inst)
+always @(*)
 begin
     
     opcode = inst[7:4];

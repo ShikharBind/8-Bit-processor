@@ -9,11 +9,10 @@ module Control_Unit(
     output[7:0] immediate_value
 );
 reg isim4;
-Decoder decoder(.isim4(isim4), .inst(inst), .imm8(immediate_value), .opcode(opcode));
+Decoder decoder(.clk(clk), .isim4(isim4), .inst(inst), .imm8(immediate_value), .opcode(opcode));
 
- always @(inst,posedge clk,reset)  
+ always @(*)  
  begin 
-    prevrd <= rd; 
       if(reset == 1'b1) begin  
                 // opcode <= 4'd0;
                 rd <= 2'b00;
@@ -169,6 +168,7 @@ Decoder decoder(.isim4(isim4), .inst(inst), .imm8(immediate_value), .opcode(opco
                 reg_write <= 1'b0;
                 end                        
       endcase
+      
       end
     //   $display(rd);
 end

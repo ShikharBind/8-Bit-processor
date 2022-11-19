@@ -1,6 +1,5 @@
 SMI A 1
-ST 0
 MR B A
 MI A 0
-LD 0
+LD 8
 SUM A B
