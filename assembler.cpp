@@ -107,6 +107,11 @@ int main()
     string s;
     while (getline(cin, s))
     {
+        if(s[0] == '#'){
+            cout<<"\t#2 access_addr_tb = 4'H"<<s[1]<<";";
+            cout<<" mem_write_data_tb = 8'H"<<s.substr(3,2)<<";"<<endl;
+            continue;
+        }
 
         // string s;
         // getline(cin, s);

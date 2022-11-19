@@ -1,5 +1,7 @@
 SMI A 1
 MR B A
 MI A 0
-LD 8
+LD 7
 SUM A B
+#4 01
+#7 05
