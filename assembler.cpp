@@ -49,7 +49,7 @@ void hexatobcdreg(string s)
     else if (s == "2")
         cout << "10";
     else if (s == "3")
-        cout << "0011";
+        cout << "11";
 }
 
 void alphabet(string reg)
@@ -157,9 +157,9 @@ int main()
         {
             cout << "0010";
             string pb = s.substr(3, 1);
-            hexatobcdreg(pb);
+            alphabet(pb);
             string al = s.substr(5, 1);
-            hexatobcd(al);
+            hexatobcdreg(al);
             // cout << endl;
         }
 
@@ -175,9 +175,9 @@ int main()
         {
             cout << "1100";
             string pb = s.substr(4, 1);
-            hexatobcdreg(pb);
+            alphabet(pb);
             string al = s.substr(6, 1);
-            hexatobcd(al);
+            hexatobcdreg(al);
             // cout << endl;
         }
 
@@ -193,9 +193,9 @@ int main()
         {
             cout << "1101";
             string pb = s.substr(4, 1);
-            hexatobcdreg(pb);
+            alphabet(pb);
             string al = s.substr(6, 1);
-            hexatobcd(al);
+            hexatobcdreg(al);
             // cout << endl;
         }
 
@@ -211,9 +211,9 @@ int main()
         {
             cout << "1111";
             string pb = s.substr(4, 1);
-            hexatobcdreg(pb);
+            alphabet(pb);
             string al = s.substr(6, 1);
-            hexatobcd(al);
+            hexatobcdreg(al);
             // cout << endl;
         }
         else if (opcode == "ANR")
@@ -228,9 +228,9 @@ int main()
         {
             cout << "1110";
             string pb = s.substr(4, 1);
-            hexatobcdreg(pb);
+            alphabet(pb);
             string al = s.substr(6, 1);
-            hexatobcd(al);
+            hexatobcdreg(al);
             // cout << endl;
         }
 
@@ -246,9 +246,9 @@ int main()
         {
             cout << "1001";
             string pb = s.substr(4, 1);
-            hexatobcdreg(pb);
+            alphabet(pb);
             string al = s.substr(6, 1);
-            hexatobcd(al);
+            hexatobcdreg(al);
             // cout << endl;
         }
 
@@ -264,9 +264,9 @@ int main()
         {
             cout << "1011";
             string pb = s.substr(4, 1);
-            hexatobcdreg(pb);
+            alphabet(pb);
             string al = s.substr(6, 1);
-            hexatobcd(al);
+            hexatobcdreg(al);
             
         }
 

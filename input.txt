@@ -1,7 +1,10 @@
-SMI A 1
+LD 3
 MR B A
-MI A 0
-LD 7
-CM A C
-#4 01
-#7 05
+MI C 2
+SUM A B
+SBI A 0
+LD 4
+MI B 1
+XRR A B
+#3 05
+#4 06
